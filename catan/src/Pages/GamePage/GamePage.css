@@ -1,0 +1,7 @@
+.terkep {
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(250, 198, 77);
+    width: 1730px;
+    height: 170px;
+}

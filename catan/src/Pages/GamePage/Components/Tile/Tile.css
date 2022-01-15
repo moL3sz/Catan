@@ -1,0 +1,13 @@
+.corner {
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    z-index: 20;
+}
+
+.corner:hover {
+    transform: scale(1.5);
+}
