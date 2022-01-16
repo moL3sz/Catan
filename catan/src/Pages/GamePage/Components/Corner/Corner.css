@@ -1,9 +1,15 @@
 .corner {
-    height: 20px;
     width: 20px;
-    background-color: red;
+    height: 20px;
     border-radius: 50%;
     display: inline-block;
+    position: relative;
+    z-index: 20;
+}
+
+.corner .building {
+    border-radius: 50%;
+    ;
 }
 
 .corner:hover {

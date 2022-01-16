@@ -1,32 +1,27 @@
 import { useEffect, useState } from "react"
-import { calculatePtrsFromIDS } from "../../load"
+import { calculatePtrsFromIDS, Corner as CornerType, updateCorner} from "../../load"
 import "./Corner.css"
 import { Player } from "../Player/Player"
+import { isImportOrExportSpecifier } from "typescript"
 
 export type corner = {
     id: number,
     tileId: number,
     x: number,
     y: number
+    cornerData: CornerType
 }
+
 export default function Corner(props:corner){
-    const [ptrs, setPtrs] = useState<number[]>([props.id])
 
-
+    const [metaData, setMetaData] = useState<CornerType>(props.cornerData)
     const [player, setPlayer] = useState<typeof Player | null>()
     const scaleConnectedTiles = ()=>{
-
-        //JUST FOR DEBUG
-        console.log(ptrs)
-        for(const ptr of ptrs){
-            const tile = document.getElementById(ptr.toString()) as HTMLDivElement;
-            tile.style.backgroundColor = "rgba(0,0,0,0.4)"
-            console.log(tile)
-        }
+        updateCorner(0, props.tileId, props.cornerData.id)
     }
     useEffect(()=>{
-        setPtrs(calculatePtrsFromIDS(props.tileId,props.id))
-    },[])
+        console.log(props.cornerData.tov)
+    },[props.cornerData.tov])
     return (
         <div className="corner absolute" id={props.id.toString()} style={{
             left:  `${props.x}px`,
@@ -34,7 +29,11 @@ export default function Corner(props:corner){
         }} onClick={()=>{
             scaleConnectedTiles();
         }}>
+            <div className="building w-full h-full" style={{
 
+                backgroundColor: props.cornerData.tov == 0 ? "red" : "green"
+            }}>
+            </div>
         </div>
     )
 }
