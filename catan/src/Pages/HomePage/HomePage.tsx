@@ -10,7 +10,7 @@ export default function HomePage() {
             <div className="login p-5 bg-red-700 rounded-xl w-fit flex flex-col mx-auto mt-[20vh] space-y-5">
                 <div className="username">
                     <p className="text-xl font-light text-white">Jatékosnév: </p>
-                    <input type="text" className="p-2 w-[30vh]" />
+                    <input type="text" className="p-2 w-[30vh]" id="player-name"/>
 
                 </div>
                 <LoginButton />

@@ -1,10 +1,16 @@
+import { joinToGame } from "../../users"
+
 export default function LoginButton(){
 
 
 
     const loginToGame = ()=>{
-        window.location.pathname = "/game"
-
+        //game join the player the the firestore database and set the player's data
+       const l = async () =>{
+           await joinToGame()
+           window.location.pathname = "/game"
+       }
+       l()
     }
     return (
         <div className="login-button w-fit mx-auto my-auto">

@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="app">
       {
-        goh ? <GamePage/> : <HomePage/>
+        goh ? <GamePage/>: <HomePage/>
       }
     </div>
   )

@@ -2,13 +2,11 @@ import "./GamePage.css"
 import Terkep from "./../../Resources/terkep.png"
 import Tile from "./Components/Tile/Tile"
 import { useEffect, useState } from "react"
-import { createImages, initGame, Tile as TileType, useSyncTileData, Corner as CornerType } from "./load"
-import { Player } from "./Components/Player/Player"
+import { initGame, useSyncTileData} from "./load"
 import Players from "./Components/Players/Players"
 export default function GamePage() {
-    const [tiles, setTiles] = useState<TileType[]>()
     useEffect(() => {
-        console.log(initGame())
+        initGame()
     }, [])
     const [metaData] = useSyncTileData()
 
@@ -16,7 +14,7 @@ export default function GamePage() {
     //here we will use the useCollection hook to render the changes from the database for the realtime
     return (
         <div className="game-page">
-            <Players players={["Réka", "Kristóf","Dorka"]}/>
+            <Players/>
             <div className="terkep absolute">
                 <img src={Terkep} alt="" className="absolute" />
                 <div className="items relative"> {
