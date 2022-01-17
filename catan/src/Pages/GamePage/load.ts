@@ -14,12 +14,48 @@ import Tegla_Resource from "./../../Resources/tegla_re.png"
 import Birka_Resource from "./../../Resources/birka_re.png"
 
 
+
+//import the buldings resources
+
+
+import Kek_Varos from "./../../Resources/kek_varos.png"
+import Kek_Telepules from "./../../Resources/kek_telepules.png"
+import Kek_Ut from "./../../Resources/kek_ut.png"
+
+
+
+
+
+
 import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore"
 import { getFirestore, getDocs, collection, query, orderBy, doc, getDoc, setDoc } from "firebase/firestore"
 import { addTilesToFirestore, app } from "../../Misc/firebase"
 import { useEffect, useState } from "react"
 import { getPlayers, Player, Resource } from "../HomePage/users"
-import { consumers } from "stream"
+
+
+
+export type Building = {
+    src:string,
+    counts:number
+}
+export const buildings : Building[] = [
+    {
+        src:Kek_Varos,
+        counts: 4,
+    },
+    {
+        src:Kek_Telepules,
+        counts: 6
+    },
+    {
+        src:Kek_Ut,
+        counts: 15
+    }
+] 
+
+
+
 export type pos = {
     x: number,
     y: number
@@ -195,10 +231,11 @@ export type Tile = {
     id: number,
     type: string
     isTheft: boolean
+    number:number,
     corners: Corner[],
 }
 
-function shuffleArray(array: string[]) {
+function shuffleArray(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -264,7 +301,13 @@ export const initGame = async () => {
     }
     const tileTypes = ["birka", "birka", "birka", "birka", "buza", "buza", "buza", "buza", "fa", "fa", "fa", "fa", "kavics", "kavics", "kavics", "tegla", "tegla", "tegla"]
     const tiles: Tile[] = []
+
+
+    const numberForTiles = [
+        2,3,3,4,4,5,5,6,6,7,8,8,9,9,10,10,11,11,12
+    ]
     shuffleArray(tileTypes)
+    shuffleArray(numberForTiles)
     tileTypes.forEach((t, i) => {
         const crs = createCornersFromTileID(i + 1)
         var cid = 0
@@ -272,6 +315,7 @@ export const initGame = async () => {
             id: i + 1,
             type: t,
             isTheft: false,
+            number:numberForTiles[i],
             corners: crs.map(e => {
                 return {
                     id: cid++,

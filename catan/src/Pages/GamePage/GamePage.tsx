@@ -6,7 +6,6 @@ import { getCurrentPlayer, initGame, useSyncTileData } from "./load"
 import Players from "./Components/Players/Players"
 import ResourceView from "./Components/ResourcesView/ResourceView"
 import { defaultResourceData, Player } from "../HomePage/users"
-import Cookies from 'universal-cookie';
 
 export default function GamePage() {
 
@@ -35,7 +34,7 @@ export default function GamePage() {
                 <div className="items relative"> {
                     metaData?.tiles.map((e: any) => {
                         return (
-                            <Tile type={e.type} id={"tile" + e.id} corners={e.corners} key={e.id} />
+                            <Tile type={e.type} id={"tile" + e.id} corners={e.corners} key={e.id} number={e.number} />
                         )
                     })
                 }</div>

@@ -10,6 +10,7 @@ import "./Tile.css"
 type tile = {
     id: string,
     type: string,
+    number:number
     corners: CornerType[]
 }
 export default function Tile(props: tile) {
@@ -27,10 +28,10 @@ export default function Tile(props: tile) {
         setPos(() => tilePositions[ID - 1])
         setCorners(() => createCornersFromTileID(ID))
     }, [])
-    const testResourceChange = ()=>{
+    const testResourceChange = () => {
 
         const player = JSON.parse(window.sessionStorage.getItem("sessionData") || "{}") as Player
-        setResource(ResourceIndexes.indexOf(props.type),1,player.id)
+        setResource(ResourceIndexes.indexOf(props.type), 1, player.id)
     }
     return (
         <div className="tile w-[265px] h-[265px] absolute" id={props.id}
@@ -42,11 +43,18 @@ export default function Tile(props: tile) {
                 e.preventDefault();
                 return false;
             }}
-            
-            onClick={()=>{
-                testResourceChange()
-            }}
+                onClick={() => {
+                    testResourceChange()
+                }}
             />
+            <div className="number-get font-black font-serif" style={{
+                color: props.number == 6 || props.number == 8 ? "red" : "black",
+                fontSize: props.number == 6 || props.number == 8 ? "7vh" : props.number == 6 || props.number == 9 ? "6vh" : "4vh",
+            }}>
+                <span>
+                    {props.number}
+                </span>
+            </div>
             <div className="corners absolute">
                 {
                     cornerPositions.map(e => {

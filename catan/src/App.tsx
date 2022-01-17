@@ -8,15 +8,20 @@ initFirebase()
 function App() {
 
   const [goh, setGoH] = useState<boolean>(false) //Game or Home
-  useEffect(()=>{
-    if(window.location.pathname === "/game"){
+  window.addEventListener("resize", () => {
+    document.getElementsByTagName("body")[0].style.height = window.innerHeight + "px";
+
+  })
+  useEffect(() => {
+    if (window.location.pathname === "/game") {
+
       setGoH(true)
     }
-  },[window.location.pathname])
+  }, [window.location.pathname])
   return (
     <div className="app">
       {
-        goh ? <GamePage/>: <HomePage/>
+        goh ? <GamePage /> : <HomePage />
       }
     </div>
   )

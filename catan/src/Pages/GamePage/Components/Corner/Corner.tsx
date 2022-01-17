@@ -26,7 +26,6 @@ export default function Corner(props:corner){
             scaleConnectedTiles();
         }}>
             <div className="building w-full h-full" style={{
-
                 backgroundColor: props.cornerData.tov == 0 ? "red" : "green"
             }}>
             </div>

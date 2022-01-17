@@ -6,10 +6,6 @@ const serviceAccount = require('../service-account.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-
-
-
-
 type Corner = {
     id: number,
     playerID: number,
