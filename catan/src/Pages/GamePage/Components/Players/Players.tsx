@@ -12,7 +12,7 @@ export default function Players() {
                 {
                     players.map((e: any) => {
                         return (
-                            <p>- {e.name}</p>
+                            <p key={Math.floor(Math.random()*1000)}>- {e.name}</p>
                         )
                     })
                 }

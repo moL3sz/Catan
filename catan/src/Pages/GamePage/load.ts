@@ -4,11 +4,22 @@ import Tegla from "./../../Resources/tegla.png"
 import Buza from "./../../Resources/buza.png"
 import Birka from "./../../Resources/birka.png"
 
+//import the resource imgages (from views)
 
-import {useCollectionData, useDocumentData} from "react-firebase-hooks/firestore"
-import { getFirestore,getDocs, collection, query, orderBy, doc,getDoc, setDoc } from "firebase/firestore"
+
+import Kavics_Resource from "./../../Resources/kavics_re.png"
+import Fa_Resource from "./../../Resources/fa_re.png"
+import Buza_Resource from "./../../Resources/buza_re.png"
+import Tegla_Resource from "./../../Resources/tegla_re.png"
+import Birka_Resource from "./../../Resources/birka_re.png"
+
+
+import { useCollectionData, useDocumentData } from "react-firebase-hooks/firestore"
+import { getFirestore, getDocs, collection, query, orderBy, doc, getDoc, setDoc } from "firebase/firestore"
 import { addTilesToFirestore, app } from "../../Misc/firebase"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { getPlayers, Player, Resource } from "../HomePage/users"
+import { consumers } from "stream"
 export type pos = {
     x: number,
     y: number
@@ -44,7 +55,13 @@ export const counts = {
     "ko": 3,
     "tegla": 3
 }
-
+export const resourceImages: string[] = [
+    Kavics_Resource,
+    Fa_Resource,
+    Buza_Resource,
+    Tegla_Resource,
+    Birka_Resource
+]
 export const tilePositions: pos[] = [
     { x: 475, y: 145 },
     { x: 475 + 260, y: 145 },
@@ -238,19 +255,18 @@ export const createCornersFromTileID = (tileID: number) => {
     }
     return corners
 }
-
-
+//init the game with random tiles
 export const initGame = async () => {
     const gameOver = await getGameOver()
     console.log(gameOver)
-    if(!gameOver){
+    if (!gameOver) {
         return
     }
     const tileTypes = ["birka", "birka", "birka", "birka", "buza", "buza", "buza", "buza", "fa", "fa", "fa", "fa", "kavics", "kavics", "kavics", "tegla", "tegla", "tegla"]
     const tiles: Tile[] = []
     shuffleArray(tileTypes)
     tileTypes.forEach((t, i) => {
-        const crs = createCornersFromTileID(i+1)
+        const crs = createCornersFromTileID(i + 1)
         var cid = 0
         const T: Tile = {
             id: i + 1,
@@ -260,7 +276,7 @@ export const initGame = async () => {
                 return {
                     id: cid++,
                     playerID: -1,
-                    cts:calculatePtrsFromIDS(i+1,cid),
+                    cts: calculatePtrsFromIDS(i + 1, cid),
                     tov: -1,
                 }
             })
@@ -273,7 +289,7 @@ export const initGame = async () => {
     await setGameOver(false)
     return tiles
 }
-export function useSyncTileData(){
+export function useSyncTileData() {
 
     const tilesRef = doc(getFirestore(app), "/game/tiles")
     const [tiles] = useDocumentData(tilesRef)
@@ -281,52 +297,71 @@ export function useSyncTileData(){
 }
 
 //update corner data -> in progress (just for test)
-export const updateCorner  = async (tov: number, TID:number,cornerID:number)=>{
-    const dd  = await getDoc(doc(getFirestore(app),`/game/tiles`)) //get the actual data from the firestore
-    const p  = dd.data()
+export const updateCorner = async (tov: number, TID: number, cornerID: number) => {
+    const dd = await getDoc(doc(getFirestore(app), `/game/tiles`)) //get the actual data from the firestore
+    const p = dd.data()
     const d = p?.tiles as Tile[]
-    d[TID-1].corners[cornerID].tov = tov
-    await setDoc(doc(getFirestore(app),"/game/tiles"), {tiles:d})
+    d[TID - 1].corners[cornerID].tov = tov
+    await setDoc(doc(getFirestore(app), "/game/tiles"), { tiles: d })
 }
 //hook for each player that joins
-export const usePlayer = () =>{
+export const usePlayer = (): [Player[]] => {
     const playersRef = doc(getFirestore(app), "/game/players");
     var plys: any[] = [];
-    useEffect(()=>{
-        (async ()=>{
+    useEffect(() => {
+        (async () => {
             const a = (await getDoc(playersRef)).data()
             plys = a?.players
         })()
-    })
-    
+    }, [])
+
     const [players] = useDocumentData(playersRef)
     return [players?.players || plys]
 }
-export const useGameOver = () : [boolean,(gameover: boolean) => any] =>{
-    const gameDataRef = doc(getFirestore(app),"/game/gameData")
+export const useGameOver = (): [boolean, (gameover: boolean) => any] => {
+    const gameDataRef = doc(getFirestore(app), "/game/gameData")
     const [gameData] = useDocumentData(gameDataRef)
-    const setGameOver = (gameover: boolean) =>{
+    const setGameOver = (gameover: boolean) => {
         (async () => {
-            await setDoc(doc(getFirestore(app),"/game/gameData"),{
-                gameover:gameover
+            await setDoc(doc(getFirestore(app), "/game/gameData"), {
+                gameover: gameover
             })
         })()
     }
-    return [gameData?.gameover,setGameOver]
+    return [gameData?.gameover, setGameOver]
 }
 //get the gameover data
-export const getGameOver = async () : Promise<boolean>=>{
-    const gameDataRef = doc(getFirestore(app),"/game/gameData")
+export const getGameOver = async (): Promise<boolean> => {
+    const gameDataRef = doc(getFirestore(app), "/game/gameData")
     const d = (await getDoc(gameDataRef)).data()
     return d?.gameover || false
 }
 //set game over in firestore
-export const setGameOver = async (go: boolean)=>{
-    const gameDataRef = doc(getFirestore(app),"/game/gameData")
-    await setDoc(gameDataRef, {gameover: go})
+export const setGameOver = async (go: boolean) => {
+    const gameDataRef = doc(getFirestore(app), "/game/gameData")
+    await setDoc(gameDataRef, { gameover: go })
 }
 
-//we can manually set the game over to debug
-(window as any).setGameOver = async (go:boolean) => {
-    await setGameOver(go)
+    //we can manually set the game over to debug
+    ; (window as any).setGameOver = async (go: boolean) => {
+        await setGameOver(go)
+    }
+
+export const getCurrentPlayer = async (playerID: number) => {
+    const playersDoc = (await getDoc(doc(getFirestore(app), "/game/players"))).data()
+    const playersList: Player[] = playersDoc?.players;
+    return playersList.find(e => (e.id === playerID))
+}
+
+
+
+export const setResource = async (resourceId: number, changes: number, playerId: number) => {
+    const players = await getPlayers()//changes means how the resource counts changes
+    //make the changes
+
+    players[playerId].resources[resourceId].counts += changes
+    console.log(players)
+
+    //commit the changes
+    await setDoc(doc(getFirestore(app),"/game/players"),{players:players})
 }

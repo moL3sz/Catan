@@ -1,0 +1,6 @@
+.resource-view {
+    top: 100%;
+    left: 0;
+    zoom: 1.4;
+    transform: translateY(-100%);
+}
