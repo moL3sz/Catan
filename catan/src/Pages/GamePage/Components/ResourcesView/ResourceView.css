@@ -22,7 +22,8 @@
 
 .resource-count-item,
 .building-count-item {
-    text-shadow: 0px 0px 1px rgba(153 27 27 / var(--tw-text-opacity));
+    text-shadow: 0px 0px 2px rgb(30, 18, 18);
+    color: rgb(30, 18, 18);
 }
 
 img {
@@ -31,4 +32,11 @@ img {
 
 .sub-title {
     box-shadow: 0px 0px 10px 0.5px rgba(0, 0, 0, 0.36) inset;
+    z-index: 3;
+}
+
+.old-texture {
+    mix-blend-mode: multiply;
+    filter: opacity(0.5);
+    z-index: -1;
 }

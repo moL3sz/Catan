@@ -23,6 +23,10 @@ import Kek_Telepules from "./../../Resources/kek_telepules.png"
 import Kek_Ut from "./../../Resources/kek_ut.png"
 
 
+import Sarga_Varos from "./../../Resources/sarga_varos.png"
+import Sarga_Telepules from "./../../Resources/sarga_telepules.png"
+import Sarga_Ut from "./../../Resources/sarga_ut.png"
+
 
 
 
@@ -50,6 +54,18 @@ export const buildings : Building[] = [
     },
     {
         src:Kek_Ut,
+        counts: 15
+    },
+    {
+        src:Sarga_Varos,
+        counts: 4,
+    },
+    {
+        src:Sarga_Telepules,
+        counts: 6
+    },
+    {
+        src:Sarga_Ut,
         counts: 15
     }
 ] 
@@ -341,10 +357,11 @@ export function useSyncTileData() {
 }
 
 //update corner data -> in progress (just for test)
-export const updateCorner = async (tov: number, TID: number, cornerID: number) => {
+export const updateCorner = async (tov: number, TID: number, cornerID: number,playerID:number) => {
     const dd = await getDoc(doc(getFirestore(app), `/game/tiles`)) //get the actual data from the firestore
     const p = dd.data()
     const d = p?.tiles as Tile[]
+    d[TID - 1].corners[cornerID].playerID = playerID
     d[TID - 1].corners[cornerID].tov = tov
     await setDoc(doc(getFirestore(app), "/game/tiles"), { tiles: d })
 }
