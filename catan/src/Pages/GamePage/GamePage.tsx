@@ -7,13 +7,14 @@ import Players from "./Components/Players/Players"
 import ResourceView from "./Components/ResourcesView/ResourceView"
 import { defaultResourceData, Player } from "../HomePage/users"
 import DiceRoll from "./Components/DiceRoll/DiceRoll"
-
+import { giveResourcesToPlayer } from "./gameplay"
 export default function GamePage() {
 
     //creataa 
 
     const [currentPlayer, setCurrentPlayer] = useState<Player>({ id: -1, name: "", resources: defaultResourceData, points: -1 })
     useEffect(() => {
+        ;(window as any).give = giveResourcesToPlayer
         const player = JSON.parse(window.sessionStorage.getItem("sessionData") || "{}") as Player;
         getCurrentPlayer(player.id).then((d) => {
             if (d) {

@@ -333,10 +333,11 @@ export const initGame = async () => {
             isTheft: false,
             number:numberForTiles[i],
             corners: crs.map(e => {
+                cid+=1
                 return {
-                    id: cid++,
+                    id: cid-1,
                     playerID: -1,
-                    cts: calculatePtrsFromIDS(i + 1, cid),
+                    cts: calculatePtrsFromIDS(i + 1, cid-1),
                     tov: -1,
                 }
             })
