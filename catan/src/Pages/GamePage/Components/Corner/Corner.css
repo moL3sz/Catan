@@ -15,6 +15,10 @@
     transform: scale(3.5);
 }
 
+.building img {
+    filter: drop-shadow(0px 0px 5px white);
+}
+
 .corner:hover {
     transform-origin: center center;
     transform: scale(1.2);

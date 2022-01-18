@@ -10,7 +10,7 @@ import "./Tile.css"
 type tile = {
     id: string,
     type: string,
-    number:number
+    number: number
     corners: CornerType[]
 }
 export default function Tile(props: tile) {
@@ -34,7 +34,7 @@ export default function Tile(props: tile) {
         setResource(ResourceIndexes.indexOf(props.type), 1, player.id)
     }
     return (
-        <div className="tile w-[265px] h-[265px] absolute" id={props.id}
+        <div className={"tile w-[265px] h-[265px] absolute " + "tile-number-" + props.number} id={props.id}
             style={{
                 left: `${pos?.x}px`,
                 top: `${pos?.y}px`,
@@ -49,7 +49,7 @@ export default function Tile(props: tile) {
             />
             <div className="number-get font-black font-serif" style={{
                 color: props.number == 6 || props.number == 8 ? "red" : "black",
-                fontSize: props.number == 6 || props.number == 8 ? "7vh" : props.number == 6 || props.number == 9 ? "6vh" : "4vh",
+                fontSize: props.number == 6 || props.number == 8 ? "7vh" : props.number == 5 || props.number == 9 ? "6vh" : props.number == 10 || props.number == 4 ? "5vh" : "4vh",
             }}>
                 <span>
                     {props.number}

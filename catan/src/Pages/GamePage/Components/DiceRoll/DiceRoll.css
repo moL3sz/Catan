@@ -1,0 +1,14 @@
+.dice-roll {
+    right: 0;
+    top: 0;
+}
+
+.dobj {
+    text-shadow: 0px 0px 2px white;
+    overflow: hidden;
+}
+
+.dobj-text {
+    position: relative;
+    z-index: 5;
+}

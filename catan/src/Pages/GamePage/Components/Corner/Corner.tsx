@@ -37,7 +37,6 @@ export default function Corner(props: corner) {
                         props.cornerData.tov == 0 ? buildings[(props.cornerData.playerID + 1) * 3 - 2].src : props.cornerData.tov == 1 ? buildings[(props.cornerData.playerID + 1) * 3 - 3].src : ""
                     } alt="" /> : ""
                 }
-                
             </div>
         </div>
     )
