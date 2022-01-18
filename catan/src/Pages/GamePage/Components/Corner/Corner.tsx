@@ -16,7 +16,10 @@ export default function Corner(props: corner) {
     const scaleConnectedTiles = () => {
         const playerID = (JSON.parse(window.sessionStorage.getItem("sessionData") || "{}") as Player).id
 
-        updateCorner(0, props.tileId, props.cornerData.id,playerID)
+        //check if theres an other players building
+        if (props.cornerData.playerID === -1 || props.cornerData.playerID === playerID) {
+            updateCorner(props.cornerData.tov == -1 ? 0 : 1, props.tileId, props.cornerData.id, playerID)
+        }
     }
     useEffect(() => {
     }, [props.cornerData.tov])

@@ -16,7 +16,7 @@
     align-items: center;
 }
 
-.tile img {
+.tile>img {
     filter: none;
 }
 

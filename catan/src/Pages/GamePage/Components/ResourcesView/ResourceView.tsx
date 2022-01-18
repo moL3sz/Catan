@@ -20,7 +20,6 @@ export default function ResourceView(props: ResourceViewType) {
     useEffect(() => {
         const bd : Building[] = [];
         for(var i = props.playerData.id*3; i < props.playerData.id*3+3; i++){
-            console.log(i)
             bd.push(buildings[i])
         }
         setBuildings(()=>bd)
@@ -33,7 +32,7 @@ export default function ResourceView(props: ResourceViewType) {
                 backgroundImage: `url(${OldTexutre})`
             }}>
             </div>
-            <p className="bg-yellow-900 text-white w-fit p-2 rounded-xl py-1 sub-title mb-2">Épületek / Nyersanyagok</p>
+            <p className="bg-yellow-900 text-white w-fit p-4 rounded-xl py-2 sub-title mb-2">Épületek / Nyersanyagok</p>
 
             <div className="buildings grid grid-rows grid-cols-3 pl-5  w-fit gap-x-5 place-items-center mb-2">
                 {

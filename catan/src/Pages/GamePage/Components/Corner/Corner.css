@@ -16,11 +16,12 @@
 }
 
 .building img {
-    filter: drop-shadow(0px 0px 5px white);
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.272)) drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.585)) drop-shadow(0px 0px 1px rgb(0, 0, 0)) brightness(130%) saturate(150%) contrast(125%);
+    ;
 }
 
 .corner:hover {
     transform-origin: center center;
-    transform: scale(1.2);
+    transform: scale(1.1);
     background-color: rgb(235, 255, 146);
 }

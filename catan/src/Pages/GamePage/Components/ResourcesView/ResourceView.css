@@ -26,13 +26,19 @@
     color: rgb(30, 18, 18);
 }
 
-img {
-    filter: drop-shadow(0px 0px 5px white);
+.building-item img {
+    filter: drop-shadow(0px 0px 2px white) drop-shadow(0px 0px 2px white) brightness(150%) saturate(125%);
+}
+
+.resource-item img {
+    filter: drop-shadow(0px 0px 2px white);
 }
 
 .sub-title {
     box-shadow: 0px 0px 10px 0.5px rgba(0, 0, 0, 0.36) inset;
     z-index: 3;
+    font-weight: bold;
+    text-shadow: 0px 0px 1px white;
 }
 
 .old-texture {

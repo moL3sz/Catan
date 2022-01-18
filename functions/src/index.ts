@@ -30,7 +30,6 @@ exports.syncTable = functions.https.onCall(async (data: Tile[], ctx) => {
             const pd = t.data()
             const prevTiles : Tile[] = pd?.tiles
             //create the new content
-            console.log(tile)
             await admin.firestore().doc(`/game/tiles`).update({tiles:[...prevTiles, tile]})
         }
     }

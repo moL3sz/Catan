@@ -408,22 +408,16 @@ export const setGameOver = async (go: boolean) => {
     ; (window as any).setGameOver = async (go: boolean) => {
         await setGameOver(go)
     }
-
 export const getCurrentPlayer = async (playerID: number) => {
     const playersDoc = (await getDoc(doc(getFirestore(app), "/game/players"))).data()
     const playersList: Player[] = playersDoc?.players;
     return playersList.find(e => (e.id === playerID))
 }
-
-
-
 export const setResource = async (resourceId: number, changes: number, playerId: number) => {
     const players = await getPlayers()//changes means how the resource counts changes
     //make the changes
 
     players[playerId].resources[resourceId].counts += changes
-    console.log(players)
-
     //commit the changes
     await setDoc(doc(getFirestore(app),"/game/players"),{players:players})
 }
